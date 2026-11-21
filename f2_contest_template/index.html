@@ -6,19 +6,184 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Employee Array Operations Suite</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <button onclick="PrintDeveloperbyMap()">
-      Console log Students with Map
-    </button>
-    <button onclick="PrintDeveloperbyForEach()">
-      Console log Students with foreach
-    </button>
-    <button onclick="addData()">Console New Data with 4th Employee</button>
-    <button onclick="removeAdmin()">Remove Admin/button>
-    <button onclick="concatenateArray()">concatenateArray</button>
+    <div class="container">
+      <header>
+        <div class="badge-wrapper">
+          <span>⚡ Interactive JavaScript Contest Suite</span>
+        </div>
+        <h1>Employee Array Operations</h1>
+        <p class="subtitle">
+          Demonstrating JavaScript array manipulation methods including
+          <code>.map()</code>, <code>.forEach()</code>, <code>.push()</code>,
+          <code>.filter()</code>, and <code>.concat()</code>.
+        </p>
+      </header>
 
+      <div class="main-grid">
+        <!-- Control Panel -->
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">
+              <span class="icon">⚙️</span>
+              <span>Operations Control Panel</span>
+            </h2>
+          </div>
+
+          <div class="actions-list">
+            <!-- Action 1: Map -->
+            <div class="action-card">
+              <div class="action-info">
+                <span class="action-name">1. Filter Developers with Map</span>
+                <span class="action-badge badge-map">Array.prototype.map()</span>
+              </div>
+              <p class="action-desc">
+                Iterates through the dataset using <code>.map()</code> and logs developers to the console.
+              </p>
+              <button class="btn-primary" onclick="PrintDeveloperbyMap()">
+                Console log Students with Map
+              </button>
+            </div>
+
+            <!-- Action 2: ForEach -->
+            <div class="action-card">
+              <div class="action-info">
+                <span class="action-name">2. Filter Developers with ForEach</span>
+                <span class="action-badge badge-foreach">Array.prototype.forEach()</span>
+              </div>
+              <p class="action-desc">
+                Iterates through the dataset using <code>.forEach()</code> and logs developers to the console.
+              </p>
+              <button class="btn-cyan" onclick="PrintDeveloperbyForEach()">
+                Console log Students with foreach
+              </button>
+            </div>
+
+            <!-- Action 3: Add Data -->
+            <div class="action-card">
+              <div class="action-info">
+                <span class="action-name">3. Append 4th Employee</span>
+                <span class="action-badge badge-push">Array.prototype.push()</span>
+              </div>
+              <p class="action-desc">
+                Adds <em>Susan (Intern, Age 20)</em> to the employees array and prints the updated list.
+              </p>
+              <button class="btn-emerald" onclick="addData()">
+                Console New Data with 4th Employee
+              </button>
+            </div>
+
+            <!-- Action 4: Remove Admin -->
+            <div class="action-card">
+              <div class="action-info">
+                <span class="action-name">4. Remove Admins</span>
+                <span class="action-badge badge-filter">Array.prototype.filter()</span>
+              </div>
+              <p class="action-desc">
+                Removes any object where <code>profession === "admin"</code> using <code>.filter()</code>.
+              </p>
+              <button class="btn-rose" onclick="removeAdmin()">
+                Remove Admin
+              </button>
+            </div>
+
+            <!-- Action 5: Concatenate Array -->
+            <div class="action-card">
+              <div class="action-info">
+                <span class="action-name">5. Concatenate New Array</span>
+                <span class="action-badge badge-concat">Array.prototype.concat()</span>
+              </div>
+              <p class="action-desc">
+                Creates a new array of 3 distinct employees and joins them using <code>.concat()</code>.
+              </p>
+              <button class="btn-purple" onclick="concatenateArray()">
+                concatenateArray
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Live Visual Console / Output -->
+        <section class="terminal-panel">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="terminal-title">Console Output Stream</span>
+            <button class="btn-clear" onclick="clearConsoleView()">Clear</button>
+          </div>
+          <div class="terminal-body" id="terminal-output">
+            <div class="terminal-empty" id="empty-state">
+              Click any operation button on the left to execute functions and view output in real-time.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer>
+        <p>
+          Employee Array Operations Suite • Built for JavaScript contest requirements • Open DevTools (F12) for native console logs.
+        </p>
+      </footer>
+    </div>
+
+    <!-- Solution script containing the required functions -->
     <script src="./script.js"></script>
+
+    <!-- Visual Output Mirror (Preserves native console.log behavior while rendering output visually on page) -->
+    <script>
+      (function () {
+        const terminalOutput = document.getElementById("terminal-output");
+        const emptyState = document.getElementById("empty-state");
+        const nativeLog = console.log;
+
+        console.log = function (...args) {
+          nativeLog.apply(console, args);
+
+          if (emptyState && emptyState.parentElement) {
+            emptyState.remove();
+          }
+
+          const entry = document.createElement("div");
+          entry.className = "terminal-entry";
+
+          const timestamp = new Date().toLocaleTimeString();
+          const timeTag = document.createElement("div");
+          timeTag.className = "terminal-entry-time";
+          timeTag.textContent = `[${timestamp}] console.log`;
+
+          const pre = document.createElement("pre");
+          pre.textContent = args
+            .map((arg) => (typeof arg === "object" ? JSON.stringify(arg, null, 2) : String(arg)))
+            .join(" ");
+
+          entry.appendChild(timeTag);
+          entry.appendChild(pre);
+          terminalOutput.appendChild(entry);
+          terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        };
+
+        window.clearConsoleView = function () {
+          terminalOutput.innerHTML = `
+            <div class="terminal-empty" id="empty-state">
+              Console cleared. Click any button to execute an operation.
+            </div>
+          `;
+        };
+      })();
+    </script>
   </body>
 </html>
